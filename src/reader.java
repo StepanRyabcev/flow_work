@@ -7,18 +7,19 @@ public class reader {
 		
 	private String fname = "input.txt";	
 	boolean fromZIP = false;
+	boolean fromXML = false;
 	
 	reader(String ffname)
 	{
 		fname = ffname;
 	}
 	
-	reader()
+	reader() //порядок работы -> деархивация+ -> дешифрация -> чтение
 	{
 		JFrame jf = new JFrame();
 		FileDialog fd = new FileDialog(jf, "Choose a file", FileDialog.LOAD);
 		fd.setDirectory("C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src");
-		fd.setFile("*.txt;*.zip");
+		fd.setFile("*.txt;*.zip;*.xml");
 		fd.setVisible(true);
 		fname = "C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src\\" + fd.getFile();
 		if (fname.endsWith(".zip"))
@@ -26,6 +27,10 @@ public class reader {
 	        UnZip uz = new UnZip(fname);
 	        fname = uz.getFname();
 	        fromZIP = true;
+		}
+		if (fname.endsWith(".xml"))
+		{
+			fromXML = true;
 		}
 	}
 	
@@ -37,6 +42,10 @@ public class reader {
 
 	public String read()
 	{
+		if (fromXML == true)
+		{
+			return (XMLparser.parse(fname));
+		}
 		 try(FileReader reader = new FileReader(fname))
 		 {			 
 		 int c;
@@ -49,6 +58,25 @@ public class reader {
          {
         	 deleteTempFile();
          }
+         
+ 		System.out.println("Зашифрован ли файл");
+ 		boolean selected = false;
+ 		Scanner in1 = new Scanner(System.in);
+ 		selected = in1.nextBoolean();
+         if (selected == true)
+         {
+         	System.out.println("Введите ключ");
+         	try (Scanner in2 = new Scanner(System.in)) {	
+ 				String key = in2.nextLine();
+ 				try {
+ 					out = crypto.decrypt(out, key);
+ 				} catch (Exception e) {	
+ 					e.printStackTrace();
+ 				}
+ 			}
+         }
+         
+         
          return out;
 		 }	
 		 catch(Exception ex){

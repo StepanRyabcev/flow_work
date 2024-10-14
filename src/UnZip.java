@@ -19,16 +19,11 @@ public class UnZip {
         {
             ZipEntry entry;
             String name;
-            //System.out.println(" | " + files.capacity());
             while((entry=zin.getNextEntry())!=null){
                   
-                name = entry.getName(); // получим название файла
-                //System.out.printf("File name: %s \n", name);
-                 
-                // распаковка
+                name = entry.getName();
                 FileOutputStream fout = new FileOutputStream("unzipped_" + name);
                 files.add(name);
-                //System.out.println(" | " + files.capacity());
                 for (int c = zin.read(); c != -1; c = zin.read()) {
                     fout.write(c);
                 }
@@ -64,10 +59,9 @@ public class UnZip {
         for (int i = 0; i < files.capacity(); i++)
         {
         	System.out.println(i + ": " + files.get(i));
-        }
+        }	
         Scanner in = new Scanner(System.in);
         int selected = in.nextInt();
-       // in.close();
         fname = "unzipped_" + files.get(selected);
         deleteunnessasaryfiles(selected);
 	}
