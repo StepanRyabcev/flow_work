@@ -1,6 +1,8 @@
 import java.awt.FileDialog;
 import java.io.*;
 import javax.swing.JFrame;
+
+import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -20,7 +22,20 @@ public class write
 	
 	public void save(String dataToSave)
 	{
-		System.out.println("1");
+		String selected = "false";
+		System.out.println(selected);
+		if (selected == "true") 	
+		{
+        	System.out.println("Введите ключ");
+        	try (Scanner in2 = new Scanner(System.in)) {
+				String key = in2.nextLine();
+				try {
+					dataToSave = crypto.encrypt(dataToSave, key);
+				} catch (Exception e) {	
+					e.printStackTrace();
+				}
+			}
+		}
 		 try(FileWriter writer = new FileWriter(fname + ".txt", false))
 	        {
 	            writer.write(dataToSave);

@@ -52,7 +52,6 @@ public class builder
 	
 	void divide() throws Exception
 	{
-		//System.out.println(input + " =");
 		if (input.indexOf("\n") > 0)
 			toparse = input.substring(0, input.indexOf("\n") - 1);
 		else
@@ -60,7 +59,6 @@ public class builder
 		boolean isVaild = Pattern.matches("^[a-zA-Z0-9-+*/()]+$", toparse);
 		if (isVaild == false)
 			throw new Exception("Incorrect");
-		//System.out.println(toparse + " =");
 		int n = input.length() - input.replace(String.valueOf("="), "").length();
 		vararray = new String[n];
 		intarray = new int[n];
@@ -95,7 +93,6 @@ public class builder
 		else
 			var1 = toparse.substring(0, n);
 		String var2 = toparse.substring(n + 1, operationindexAft(toparse, n));
-		//System.out.println(var1 + " | " + var2 + " == " + oper);
 		String torepl = parse(var1, var2, oper);
 		if (operationindex(toparse, n) != 0)
 			toparse = toparse.substring(0, operationindex(toparse, n) + 1) + torepl + toparse.substring(operationindexAft(toparse, n));
@@ -111,7 +108,6 @@ public class builder
 		}
 		else
 		{	
-		//System.out.println(v1 + " | " + v2);
 		for (int i = 0; i < vararray.length; i++)
 		{
 			if (v1.equalsIgnoreCase(vararray[i]))
@@ -120,8 +116,6 @@ public class builder
 			}
 		}
 		}			
-		
-		//System.out.println(v1 + " = " + vv1);
 		
 		if (isParsable(v2))
 		{
@@ -138,7 +132,6 @@ public class builder
 		}
 		}
 		
-		//System.out.println(vv1 + " | " + vv2);
 			
 		if (o == "+")
 		{
@@ -182,13 +175,11 @@ public class builder
 					var1 = toparse.substring(0, i);
 				String var2 = toparse.substring(i + 1, operationindexAft(toparse, i));
 				String parsed;
-				//System.out.println(var1 + " | " + var2 + " --- " + toparse);
 				if (toparse.charAt(i) == '+')
 					parsed = parse(var1, var2, "+");
 				else
 					parsed = parse(var1, var2, "-");
 				toparse = parsed + toparse.substring(operationindexAft(toparse, i));
-				//System.out.println(toparse);
 				break;
 			}
 				

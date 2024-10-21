@@ -1,5 +1,6 @@
 import java.security.MessageDigest;
 import java.util.Base64;
+import java.util.Scanner;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -28,4 +29,25 @@ public class crypto {
         byte[] keyBytes = sha.digest(key.getBytes("UTF-8"));
         return new SecretKeySpec(keyBytes, "AES");
     }
+	
+	public static String decryptIfNeeded(String input)
+	{
+ 		System.out.println("Зашифрован ли файл");
+ 		boolean selected = false;
+ 		Scanner in1 = new Scanner(System.in);
+ 		selected = in1.nextBoolean();
+         if (selected == true)
+         {
+         	System.out.println("Введите ключ");
+         	try (Scanner in2 = new Scanner(System.in)) {	
+ 				String key = in2.nextLine();
+ 				try {
+ 					input = decrypt(input, key);
+ 				} catch (Exception e) {	
+ 					e.printStackTrace();
+ 				}
+ 			}
+         }
+		return input;
+	}
 }
