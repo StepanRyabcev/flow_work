@@ -1,6 +1,6 @@
- /*import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-class Test {
+class TestBuilder {
 
 	private String generatetext()
 	{
@@ -61,7 +61,7 @@ class Test {
 	}
 
 	@org.junit.jupiter.api.Test
-	void testFindoperation() {
+	void testFindoperation() throws Exception {
 		String input = "3 * 4";
 		String expected = "12";
 		builder bd = new builder(input);
@@ -80,7 +80,7 @@ class Test {
 	}
 
 	@org.junit.jupiter.api.Test
-	void testIfsumexist() {
+	void testIfsumexist() throws Exception {
 
 			boolean expected = true;
 			String input = "3 + 4";
@@ -122,7 +122,7 @@ class Test {
 	}
 
 	@org.junit.jupiter.api.Test
-	void testParseString() {
+	void testParseString() throws Exception {
 		String input = "-1 + 3 + 4 - 1 + 4 - 4";
 		String expected = "5";
 		builder bd = new builder(input);
@@ -133,4 +133,3 @@ class Test {
 	}
 
 }
-*/
