@@ -1,3 +1,5 @@
+import java.util.regex.Pattern;
+
 public class builder 
 {
 	private String input;
@@ -48,13 +50,16 @@ public class builder
 		input = input.replaceAll(" ", "");
 	}
 	
-	void divide()
+	void divide() throws Exception
 	{
 		//System.out.println(input + " =");
 		if (input.indexOf("\n") > 0)
 			toparse = input.substring(0, input.indexOf("\n") - 1);
 		else
 			toparse = input;
+		boolean isVaild = Pattern.matches("^[a-zA-Z0-9-+*/()]+$", toparse);
+		if (isVaild == false)
+			throw new Exception("Incorrect");
 		//System.out.println(toparse + " =");
 		int n = input.length() - input.replace(String.valueOf("="), "").length();
 		vararray = new String[n];
@@ -62,6 +67,9 @@ public class builder
 		String temp = input.substring(input.indexOf("\n") + 1);
 		for (int i = 0; i < n; i++)
 		{
+			isVaild = Pattern.matches("^[a-zA-Z]+=[0-9]+$", temp);
+			if (isVaild == false)
+				throw new Exception("Incorrect");	
 			int tocut = temp.indexOf("\n") - 1;
 			String cur;
 			if (tocut > 0)

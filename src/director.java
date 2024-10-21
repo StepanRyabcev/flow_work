@@ -5,16 +5,20 @@ public class director {
 	{
 		builder bd = new builder(input);
 		bd.removespaces();
-		bd.divide();
-		while(bd.ifsumexist("*"))
-		{
-			bd.findoperation("*");
-		} 
-		while(bd.ifsumexist("/"))
-		{
-			bd.findoperation("/");
-		} 
-		bd.parseString();
+		try {
+			bd.divide();
+			while(bd.ifsumexist("*"))
+			{
+				bd.findoperation("*");
+			} 
+			while(bd.ifsumexist("/"))
+			{
+				bd.findoperation("/");
+			} 
+			bd.parseString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return bd.getresult();
 	}
 	
