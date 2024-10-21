@@ -5,23 +5,29 @@ import javax.swing.JFrame;
 
 public class reader {
 		
-	private String fname = "input.txt";	
+	private String fname;	
+	boolean Specified = false;
 	boolean fromZIP = false;
 	boolean fromXML = false;
 	
 	reader(String ffname)
 	{
 		fname = ffname;
+		Specified = true;
+		Reader();
 	}
 	
-	reader() //порядок работы -> деархивация+ -> дешифрация -> чтение
+	private void Reader()
 	{
-		JFrame jf = new JFrame();
-		FileDialog fd = new FileDialog(jf, "Choose a file", FileDialog.LOAD);
-		fd.setDirectory("C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src");
-		fd.setFile("*.txt;*.zip;*.xml");
-		fd.setVisible(true);
-		fname = "C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src\\" + fd.getFile();
+		if (Specified == false)
+		{	
+			JFrame jf = new JFrame();
+			FileDialog fd = new FileDialog(jf, "Choose a file", FileDialog.LOAD);
+			fd.setDirectory("C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src");
+			fd.setFile("*.txt;*.zip;*.xml");
+			fd.setVisible(true);
+			fname = "C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src\\" + fd.getFile();
+		}
 		if (fname.endsWith(".zip"))
 		{
 	        UnZip uz = new UnZip(fname);
@@ -32,6 +38,11 @@ public class reader {
 		{
 			fromXML = true;
 		}
+	}
+	
+	reader() //добавить расшифровку xml
+	{
+		Reader();
 	}
 	
 	void deleteTempFile()
@@ -55,28 +66,9 @@ public class reader {
          }
          reader.close();
          if (fromZIP)
-         {
         	 deleteTempFile();
-         }
-         
- 		System.out.println("Зашифрован ли файл");
- 		boolean selected = false;
- 		Scanner in1 = new Scanner(System.in);
- 		selected = in1.nextBoolean();
-         if (selected == true)
-         {
-         	System.out.println("Введите ключ");
-         	try (Scanner in2 = new Scanner(System.in)) {	
- 				String key = in2.nextLine();
- 				try {
- 					out = crypto.decrypt(out, key);
- 				} catch (Exception e) {	
- 					e.printStackTrace();
- 				}
- 			}
-         }
-         
-         
+
+         out = crypto.decryptIfNeeded(out);
          return out;
 		 }	
 		 catch(Exception ex){

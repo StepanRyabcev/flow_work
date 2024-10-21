@@ -121,7 +121,7 @@ class TestBuilder {
 		assertEquals(bd4.ifsumexist("/"), expected);
 	}
 
-	@org.junit.jupiter.api.Test
+	@org.junit.jupiter.api.Test	
 	void testParseString() throws Exception {
 		String input = "-1 + 3 + 4 - 1 + 4 - 4";
 		String expected = "5";
