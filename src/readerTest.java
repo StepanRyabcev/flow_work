@@ -16,9 +16,16 @@ class readerTest {
 	private static Path tempZipFile;
 	private static Path tempFileEncr;
 	private static Path tempZipEncr;
+	private static enpryptionOptions op;
+	private static enpryptionOptions op1;
 	
     @BeforeAll
     public static void setUp() throws Exception {
+    	op = new enpryptionOptions();
+    	op1 = new enpryptionOptions();
+    	op1.SetDecr(true);
+    	op1.SetDecrKey("key");
+    	
         tempFile = Files.createTempFile("testFileTXT", ".txt");
         Files.writeString(tempFile, "Hello, World!");
         tempXMLFile = Files.createTempFile("testFileXML", ".xml");
@@ -65,7 +72,7 @@ class readerTest {
 	
 	@Test
 	void testTXT() {
-		reader rd = new reader(tempFile.toString());
+		reader rd = new reader(tempFile.toString(), op);
 		String out = rd.read();
 		assertEquals("Hello, World!", out);
 	}
@@ -73,7 +80,7 @@ class readerTest {
 	@Test
 	void testXML()
 	{
-		reader rd = new reader(tempXMLFile.toString());
+		reader rd = new reader(tempXMLFile.toString(), op);
 		String out = rd.read();
 		String sholdbe = "a + a + c.\na = 5.\nb = 6.\nc = 8";
 		assertEquals(sholdbe, out);
@@ -82,7 +89,7 @@ class readerTest {
 	@Test
 	void testZIP()
 	{
-		reader rd = new reader(tempZipFile.toString());
+		reader rd = new reader(tempZipFile.toString(), op);
 		String out = rd.read();
 		assertEquals("Hello, World!", out);
 	}
@@ -90,16 +97,16 @@ class readerTest {
 	@Test
 	void testDecryption()
 	{
-		reader rd = new reader(tempFileEncr.toString());
+		reader rd = new reader(tempFileEncr.toString(), op1);
 		String out = rd.read();
 		assertEquals("Hello, World!", out);
 	}
 	
-	/*@Test
+	@Test
 	void testDecryptionFromZip()
 	{
-		reader rd = new reader(tempZipEncr.toString());
+		reader rd = new reader(tempZipEncr.toString(), op1);
 		String out = rd.read();
 		assertEquals("Hello, World!", out);
-	}*/	
+	}
 }

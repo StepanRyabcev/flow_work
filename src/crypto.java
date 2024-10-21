@@ -30,23 +30,23 @@ public class crypto {
         return new SecretKeySpec(keyBytes, "AES");
     }
 	
-	public static String decryptIfNeeded(String input)
+	public static String decryptIfNeeded(String input, enpryptionOptions op)
 	{
- 		System.out.println("Зашифрован ли файл");
- 		boolean selected = false;
- 		Scanner in1 = new Scanner(System.in);
- 		selected = in1.nextBoolean();
+ 		//System.out.println("Зашифрован ли файл");
+ 		boolean selected = op.isNeedtoDecrypt();
+ 		//Scanner in1 = new Scanner(System.in);
+ 		//selected = in1.nextBoolean();
          if (selected == true)
          {
-         	System.out.println("Введите ключ");
-         	try (Scanner in2 = new Scanner(System.in)) {	
- 				String key = in2.nextLine();
+         	//System.out.println("Введите ключ");
+         	// (Scanner in2 = new Scanner(System.in)) {	
+ 				String key = op.DecryptionKey();
  				try {
  					input = decrypt(input, key);
  				} catch (Exception e) {	
  					e.printStackTrace();
  				}
- 			}
+ 			//}
          }
 		return input;
 	}

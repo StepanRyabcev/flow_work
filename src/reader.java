@@ -9,9 +9,11 @@ public class reader {
 	boolean Specified = false;
 	boolean fromZIP = false;
 	boolean fromXML = false;
+	enpryptionOptions op;
 	
-	reader(String ffname)
+	reader(String ffname, enpryptionOptions op1)
 	{
+		op = op1;
 		fname = ffname;
 		Specified = true;
 		Reader();
@@ -40,8 +42,9 @@ public class reader {
 		}
 	}
 	
-	reader() //добавить расшифровку xml
+	reader(enpryptionOptions op1) //добавить расшифровку xml
 	{
+		op = op1;
 		Reader();
 	}
 	
@@ -67,8 +70,8 @@ public class reader {
          reader.close();
          if (fromZIP)
         	 deleteTempFile();
-
-         out = crypto.decryptIfNeeded(out);
+         
+         out = crypto.decryptIfNeeded(out, op);
          return out;
 		 }	
 		 catch(Exception ex){

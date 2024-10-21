@@ -1,11 +1,12 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) 
+	public static void main(String[] args) throws IOException 
 	{
-		
-		reader rd = new reader();
+		enpryptionOptions op = new enpryptionOptions();
+		reader rd = new reader(op);
 		String out = rd.read();
 		while(out.indexOf("(") >= 0)
 			out = brackets.findAndParseBr(out);
