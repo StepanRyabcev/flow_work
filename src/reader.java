@@ -1,5 +1,5 @@
 import java.io.*;
-import java.util.Scanner;
+import java.util.Scanner;	
 import java.awt.*;
 import javax.swing.JFrame;
 
@@ -9,6 +9,7 @@ public class reader {
 	boolean Specified = false;
 	boolean fromZIP = false;
 	boolean fromXML = false;
+	boolean fromJSON = false;
 	enpryptionOptions op;
 	
 	reader(String ffname, enpryptionOptions op1)
@@ -26,7 +27,7 @@ public class reader {
 			JFrame jf = new JFrame();
 			FileDialog fd = new FileDialog(jf, "Choose a file", FileDialog.LOAD);
 			fd.setDirectory("C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src");
-			fd.setFile("*.txt;*.zip;*.xml");
+			fd.setFile("*.txt;*.zip;*.xml;*.json");
 			fd.setVisible(true);
 			fname = "C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src\\" + fd.getFile();
 		}
@@ -40,9 +41,13 @@ public class reader {
 		{
 			fromXML = true;
 		}
+		if (fname.endsWith(".json"))
+		{
+			fromJSON = true;
+		}
 	}
 	
-	reader(enpryptionOptions op1) //добавить расшифровку xml
+	reader(enpryptionOptions op1)
 	{
 		op = op1;
 		Reader();
@@ -72,6 +77,8 @@ public class reader {
         	 deleteTempFile();
          
          out = crypto.decryptIfNeeded(out, op);
+         if (fromJSON == true)
+        	 out = JSONparser.parse(out);
          return out;
 		 }	
 		 catch(Exception ex){
