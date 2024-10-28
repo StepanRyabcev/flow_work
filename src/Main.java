@@ -12,7 +12,7 @@ public class Main {
 			out = brackets.findAndParseBr(out);
 		String result = director.parse(out);
 		System.out.println(result);
-		write wr = new write();
+		write wr = new write(op);
 		wr.save(result);
 	}
 }

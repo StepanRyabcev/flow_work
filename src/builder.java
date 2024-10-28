@@ -58,16 +58,13 @@ public class builder
 			toparse = input;
 		boolean isVaild = Pattern.matches("^[a-zA-Z0-9-+*/()]+$", toparse);
 		if (isVaild == false)
-			throw new Exception("Incorrect");
+			throw new Exception("Incorrect1");
 		int n = input.length() - input.replace(String.valueOf("="), "").length();
 		vararray = new String[n];
 		intarray = new int[n];
 		String temp = input.substring(input.indexOf("\n") + 1);
 		for (int i = 0; i < n; i++)
 		{
-			isVaild = Pattern.matches("^[a-zA-Z]+=[0-9]+$", temp);
-			if (isVaild == false)
-				throw new Exception("Incorrect");	
 			int tocut = temp.indexOf("\n") - 1;
 			String cur;
 			if (tocut > 0)
@@ -78,6 +75,9 @@ public class builder
 			{
 				cur = temp;
 			}
+			isVaild = Pattern.matches("^[a-zA-Z]+=[0-9]+$", cur);
+			if (isVaild == false)
+				throw new Exception("Incorrect2");	
 			temp = temp.substring(temp.indexOf("\n") + 1);
 			vararray[i] = cur.substring(0, cur.indexOf("=")); 
 			intarray[i] = Integer.parseInt(cur.substring(cur.indexOf("=") + 1));

@@ -9,9 +9,11 @@ import java.util.zip.ZipOutputStream;
 public class write 
 {
 	String fname;
+	enpryptionOptions op;
 	
-	write()
+	write(enpryptionOptions op1)
 	{
+		op = op1;
 		JFrame jf = new JFrame();
 		FileDialog fd = new FileDialog(jf, "Choose a file", FileDialog.SAVE);
 		fd.setDirectory("C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src");
