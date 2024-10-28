@@ -58,7 +58,7 @@ public class reader {
 	{
 		if (fromXML == true)
 		{
-			return (XMLparser.parse(fname));
+			return (XMLparser.parse(fname, op));
 		}
 		 try(FileReader reader = new FileReader(fname))
 		 {			 
