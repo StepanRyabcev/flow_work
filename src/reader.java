@@ -10,6 +10,7 @@ public class reader {
 	boolean fromZIP = false;
 	boolean fromXML = false;
 	boolean fromJSON = false;
+	boolean fromYAML = false;
 	enpryptionOptions op;
 	
 	reader(String ffname, enpryptionOptions op1)
@@ -27,7 +28,7 @@ public class reader {
 			JFrame jf = new JFrame();
 			FileDialog fd = new FileDialog(jf, "Choose a file", FileDialog.LOAD);
 			fd.setDirectory("C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src");
-			fd.setFile("*.txt;*.zip;*.xml;*.json");
+			fd.setFile("*.txt;*.zip;*.xml;*.json;*.yml;*.yaml");
 			fd.setVisible(true);
 			fname = "C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src\\" + fd.getFile();
 		}
@@ -44,6 +45,10 @@ public class reader {
 		if (fname.endsWith(".json"))
 		{
 			fromJSON = true;
+		}
+		if ((fname.endsWith(".yml")) || (fname.endsWith(".yaml")))
+		{
+			fromYAML = true;
 		}
 	}
 	
@@ -79,6 +84,8 @@ public class reader {
          out = crypto.decryptIfNeeded(out, op);
          if (fromJSON == true)
         	 out = JSONparser.parse(out);
+         if (fromYAML == true)
+        	 out = YAMLparser.parse(out);
          return out;
 		 }	
 		 catch(Exception ex){

@@ -6,7 +6,6 @@ public class Main {
 	public static void main(String[] args) throws IOException 
 	{
 		enpryptionOptions op = new enpryptionOptions();
-		JSONparser pr = new JSONparser();
 		reader rd = new reader(op);
 		String out = rd.read();
 		while(out.indexOf("(") >= 0)
