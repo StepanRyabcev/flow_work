@@ -11,6 +11,7 @@ public class reader {
 	boolean fromXML = false;
 	boolean fromJSON = false;
 	boolean fromYAML = false;
+	boolean from7z = false;
 	enpryptionOptions op;
 	
 	reader(String ffname, enpryptionOptions op1)
@@ -28,9 +29,15 @@ public class reader {
 			JFrame jf = new JFrame();
 			FileDialog fd = new FileDialog(jf, "Choose a file", FileDialog.LOAD);
 			fd.setDirectory("C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src");
-			fd.setFile("*.txt;*.zip;*.xml;*.json;*.yml;*.yaml");
+			fd.setFile("*.txt;*.zip;*.xml;*.json;*.yml;*.yaml;*.7z;*.rar");
 			fd.setVisible(true);
 			fname = "C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src\\" + fd.getFile();
+		}
+		if((fname.endsWith(".7z")) || (fname.endsWith(".rar")))
+		{
+			from7z = true;
+			ArchiveExtractor uz = new ArchiveExtractor(fname);
+			fname = uz.select();
 		}
 		if (fname.endsWith(".zip"))
 		{
@@ -80,6 +87,10 @@ public class reader {
          reader.close();
          if (fromZIP)
         	 deleteTempFile();
+         if (from7z)
+         {
+        	 deleteTempFile();
+         }
          
          out = crypto.decryptIfNeeded(out, op);
          if (fromJSON == true)
