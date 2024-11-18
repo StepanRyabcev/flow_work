@@ -17,7 +17,7 @@ import net.sf.sevenzipjbinding.simple.ISimpleInArchiveItem;
 
 public class ArchiveExtractor {
 	String fname;
-	private static Vector<String> files = new Vector<>(1);
+	private static Vector<String> files = new Vector<>(1, 1);
 	ArchiveExtractor(String fnamee)
 	{
 		fname = fnamee;
@@ -84,7 +84,8 @@ public class ArchiveExtractor {
 		if(files.capacity() > 1)
 		{
 		System.out.println("Выберите файл");
-        for (int i = 0; i < files.capacity() - 1; i++)
+		System.out.println(files.capacity());
+        for (int i = 0; i < files.capacity(); i++)
         {
         	System.out.println(i + ": " + files.get(i));
         }	
@@ -100,7 +101,7 @@ public class ArchiveExtractor {
 	
 	private void DeleteUnnesessary(int toKeep)
 	{
-        for (int i = 0; i < files.capacity() - 1; i++)
+        for (int i = 0; i < files.capacity(); i++)
         {
         	if (i != toKeep)
         	{
