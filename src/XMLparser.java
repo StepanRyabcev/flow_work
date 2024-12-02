@@ -39,7 +39,8 @@ public class XMLparser
 		} 
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			System.out.println("Ошибка разбора XML");
+			System.exit(0);
 		}
 		return "";
 	}

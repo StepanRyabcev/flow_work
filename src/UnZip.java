@@ -1,16 +1,17 @@
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.util.Scanner;
 import java.io.File; 
 
-
+	
 public class UnZip {
 
 	String fname;
-	Vector files = new Vector(0);
+	Vector<String> files = new Vector<String>(0);
 	
 	UnZip(String ffname)
 	{
@@ -20,7 +21,6 @@ public class UnZip {
             ZipEntry entry;
             String name;
             while((entry=zin.getNextEntry())!=null){
-                  
                 name = entry.getName();
                 FileOutputStream fout = new FileOutputStream("unzipped_" + name);
                 files.add(name);
@@ -55,15 +55,31 @@ public class UnZip {
 	
 	private void select()
 	{
-		System.out.println("Выберите файл");
-        for (int i = 0; i < files.capacity(); i++)
-        {
-        	System.out.println(i + ": " + files.get(i));
-        }	
-        Scanner in = new Scanner(System.in);
-        int selected = in.nextInt();
-        fname = "unzipped_" + files.get(selected);
-        deleteunnessasaryfiles(selected);
+		int selected;
+		while(true)
+		{
+			try {
+			System.out.println("Выберите файл");
+			for (int i = 0; i < files.capacity(); i++)
+			{
+				System.out.println(i + ": " + files.get(i));
+			}	
+			@SuppressWarnings("resource")
+			Scanner in = new Scanner(System.in);
+			selected = in.nextInt();
+			fname = "unzipped_" + files.get(selected);
+			deleteunnessasaryfiles(selected);
+			}
+		catch(InputMismatchException e)
+		{
+			System.out.println("Неверный ввод");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			System.exit(0);
+		}
+		}
 	}
 	
 	
