@@ -99,9 +99,16 @@ public class reader {
         	 out = YAMLparser.parse(out);
          return out;
 		 }	
-		 catch(Exception ex){
-			 System.out.println(ex.getMessage());
-	        }
+		 catch (FileNotFoundException ex) 
+			{
+				System.out.println("Не найден файл для загрузки выражения");
+				System.exit(0);
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+				System.exit(0);
+			}
 		return "";   
 	}
 }

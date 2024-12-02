@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -36,15 +37,19 @@ public class ArchiveExtractor {
                     result = item.extractSlow(new ISequentialOutStream() {
                         public int write(byte[] data) throws SevenZipException {
                         	try (FileOutputStream fos = new FileOutputStream(item.getPath())) {
-                        		   try {
+                        		try {
 									fos.write(data);
 								} catch (IOException e) {
+									System.out.println("Ошибка деархивации");
 									e.printStackTrace();
+									System.exit(0);
 								}
                         		} catch (FileNotFoundException e1) {
-									e1.printStackTrace();
+                        			System.out.println("Не удалось открыть файл для записи файлов из архива");
+									System.exit(0);
 								} catch (IOException e1) {
 									e1.printStackTrace();
+									System.exit(0);
 								}
                             return data.length;
                         }
@@ -55,6 +60,7 @@ public class ArchiveExtractor {
                      
                     } else {
                         System.err.println("Error extracting item: " + result);
+                        System.exit(0);
                     }
                 }
             }
@@ -80,21 +86,41 @@ public class ArchiveExtractor {
 	
 	public String select()
 	{
+		//	SelectFile sf = new SelectFile();
 		getFileList();
 		if(files.capacity() > 1)
 		{
-		System.out.println("Выберите файл");
-		System.out.println(files.capacity());
-        for (int i = 0; i < files.capacity(); i++)
-        {
-        	System.out.println(i + ": " + files.get(i));
-        }	
-        Scanner in = new Scanner(System.in);
-        int selected = in.nextInt();
-        String Fname = files.get(selected);
-        System.out.println(Fname);
-        DeleteUnnesessary(selected);
-        return Fname;
+		while(true)
+		{
+			System.out.println("Выберите файл");
+			for (int i = 0; i < files.capacity(); i++)
+			{
+				System.out.println(i + ": " + files.get(i));
+			}	
+			try {
+				@SuppressWarnings("resource")
+				Scanner in = new Scanner(System.in);
+				int selected = in.nextInt();
+				if ((selected < 0) || (selected >= files.capacity()))
+				{
+					System.out.println("Файла с таким номером не существует");
+					continue;
+				}
+				String Fname = files.get(selected);
+				System.out.println(Fname);
+				DeleteUnnesessary(selected);
+				return Fname;
+			}
+			catch(InputMismatchException e)
+			{
+				System.out.println("Неверный ввод");
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				System.exit(0);
+			}
+		}
 		}
 		return files.get(0);
 	}
