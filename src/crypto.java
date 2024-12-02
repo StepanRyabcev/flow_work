@@ -1,7 +1,7 @@
 import java.security.MessageDigest;
 import java.util.Base64;
-import java.util.Scanner;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -24,7 +24,7 @@ public class crypto {
         return new String(decryptedBytes);
 	}
 	
-	private static SecretKeySpec getKey(String key) throws Exception {
+	private static SecretKeySpec getKey(String key) throws Exception {	
         MessageDigest sha = MessageDigest.getInstance("SHA-256");
         byte[] keyBytes = sha.digest(key.getBytes("UTF-8"));
         return new SecretKeySpec(keyBytes, "AES");
@@ -32,21 +32,27 @@ public class crypto {
 	
 	public static String decryptIfNeeded(String input, enpryptionOptions op)
 	{
- 		//System.out.println("Зашифрован ли файл");
- 		boolean selected = op.isNeedtoDecrypt();
- 		//Scanner in1 = new Scanner(System.in);
- 		//selected = in1.nextBoolean();
+  		boolean selected = op.isNeedtoDecrypt();
          if (selected == true)
          {
-         	//System.out.println("Введите ключ");
-         	// (Scanner in2 = new Scanner(System.in)) {	
  				String key = op.DecryptionKey();
  				try {
  					input = decrypt(input, key);
- 				} catch (Exception e) {	
- 					e.printStackTrace();
+ 				} 
+ 				catch(BadPaddingException ex)
+ 				{
+ 					System.out.println("Неверный ключ для дешифовки");
+ 					System.exit(0);
  				}
- 			//}
+ 				catch(IllegalArgumentException ex1)
+ 				{
+ 					System.out.println("Ошибка дешифровки. Вероятно файл не был зашифрован");
+ 					System.exit(0);
+ 				}
+ 				catch (Exception e) {	
+ 					System.out.println("Ошибка дешифровки");
+ 					System.exit(0);
+ 				} 			
          }
 		return input;
 	}
