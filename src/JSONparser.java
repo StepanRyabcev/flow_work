@@ -1,9 +1,13 @@
+import javax.swing.JOptionPane;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JSONparser 
 {
+	static boolean GUIMode = true;
+	
 	public static String parse(String json)
 	{
 		String out = "";
@@ -19,12 +23,18 @@ public class JSONparser
 		}
 		catch(JsonMappingException e1)
 		{
-			System.out.println("Нарушена структура JSON файла");
+			if(GUIMode)
+				JOptionPane.showMessageDialog(null, "Нарушена структура JSON файла", "Ошибка", JOptionPane.ERROR_MESSAGE);
+		 	else
+		 		System.out.println("Нарушена структура JSON файла");
 			System.exit(0);
 		}
 		catch(JsonProcessingException e2)
 		{
-			System.out.println("Не удалось считать данные с JSON файла");
+			if(GUIMode)
+				JOptionPane.showMessageDialog(null, "Не удалось считать данные с JSON файла", "Ошибка", JOptionPane.ERROR_MESSAGE);
+		 	else
+		 		System.out.println("Не удалось считать данные с JSON файла");
 			System.exit(0);
 		}
 		return out;

@@ -1,3 +1,4 @@
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -11,6 +12,8 @@ import org.w3c.dom.*;
 
 public class XMLparser 
 {
+	static boolean GUIMode = true;
+	
 	public static String parse(String fname, enpryptionOptions op)
 	{	
 		try 
@@ -39,7 +42,10 @@ public class XMLparser
 		} 
 		catch(Exception e)
 		{
-			System.out.println("Ошибка разбора XML");
+			if(GUIMode)
+				JOptionPane.showMessageDialog(null, "Ошибка разбора XML", "Ошибка", JOptionPane.ERROR_MESSAGE);
+		 	else
+		 		System.out.println("Ошибка разбора XML");
 			System.exit(0);
 		}
 		return "";

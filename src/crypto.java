@@ -4,8 +4,12 @@ import java.util.Base64;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+import javax.swing.JOptionPane;
 
 public class crypto {
+	
+	static boolean GUIMode = true;	
+	
 	public static String encrypt(String input, String key) throws Exception
 	{
 		 SecretKeySpec secretKey = getKey(key);
@@ -41,16 +45,25 @@ public class crypto {
  				} 
  				catch(BadPaddingException ex)
  				{
- 					System.out.println("Неверный ключ для дешифовки");
+ 					if(GUIMode)
+ 						JOptionPane.showMessageDialog(null, "Неверный ключ для дешифовки", "Ошибка", JOptionPane.ERROR_MESSAGE);
+ 				 	else
+ 				 		System.out.println("Неверный ключ для дешифовки");
  					System.exit(0);
  				}
  				catch(IllegalArgumentException ex1)
  				{
- 					System.out.println("Ошибка дешифровки. Вероятно файл не был зашифрован");
+ 					if(GUIMode)
+ 						JOptionPane.showMessageDialog(null, "Ошибка дешифровки. Вероятно файл не был зашифрован", "Ошибка", JOptionPane.ERROR_MESSAGE);
+ 				 	else
+ 				 		System.out.println("Ошибка дешифровки. Вероятно файл не был зашифрован");
  					System.exit(0);
  				}
  				catch (Exception e) {	
- 					System.out.println("Ошибка дешифровки");
+ 					if(GUIMode)
+ 						JOptionPane.showMessageDialog(null, "Ошибка дешифровки", "Ошибка", JOptionPane.ERROR_MESSAGE);
+ 				 	else
+ 				 		System.out.println("Ошибка дешифровки");
  					System.exit(0);
  				} 			
          }

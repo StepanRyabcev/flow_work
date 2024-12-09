@@ -1,9 +1,14 @@
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import org.yaml.snakeyaml.Yaml;
 
 public class YAMLparser {
+	
+	static boolean GUIMode = true;
+	
 	public static String parse(String textToParse)
 	{
 		String out = "";
@@ -23,6 +28,9 @@ public class YAMLparser {
 		}
 		catch(Exception e)
 		{
+			if(GUIMode)
+				JOptionPane.showMessageDialog(null, "Ошибка разбора YAML", "Ошибка", JOptionPane.ERROR_MESSAGE);
+		 	else
 			System.out.println("Ошибка разбора YAML");
 			System.exit(0);
 		}

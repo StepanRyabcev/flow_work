@@ -1,6 +1,7 @@
 import java.io.*;
 import java.awt.*;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class reader {
 		
@@ -12,6 +13,8 @@ public class reader {
 	boolean fromYAML = false;
 	boolean from7z = false;
 	enpryptionOptions op;
+	
+	boolean GUIMode = true;
 	
 	reader(String ffname, enpryptionOptions op1)
 	{
@@ -100,11 +103,17 @@ public class reader {
 		 }	
 		 catch (FileNotFoundException ex) 
 			{
-				System.out.println("Не найден файл для загрузки выражения");
+			 	if(GUIMode)
+					JOptionPane.showMessageDialog(null, "Не найден файл для загрузки выражения", "Ошибка", JOptionPane.ERROR_MESSAGE);
+			 	else
+			 		System.out.println("Не найден файл для загрузки выражения");
 				System.exit(0);
 			}
 			catch(IOException e)
 			{
+				if(GUIMode)
+					JOptionPane.showMessageDialog(null, "Произошла ошибка", "Ошибка", JOptionPane.ERROR_MESSAGE);
+			 	else
 				e.printStackTrace();
 				System.exit(0);
 			}

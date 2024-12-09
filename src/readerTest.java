@@ -1,4 +1,4 @@
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;	
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,6 +16,8 @@ class readerTest {
 	private static Path tempZipFile;
 	private static Path tempFileEncr;
 	private static Path tempZipEncr;
+	private static Path tempJSONFile;
+	private static Path tempYAMLFile;
 	private static enpryptionOptions op;
 	private static enpryptionOptions op1;
 	
@@ -59,6 +61,24 @@ class readerTest {
             zos.write(encrypted.getBytes());
             zos.closeEntry();
         }
+        tempJSONFile = Files.createTempFile("testFileJSON", ".json");
+        String JSONcontent = "{\r\n"
+        		+ "	\"expression\": \"a + a + c\",\r\n"
+        		+ "	\"variablesNames\": [\"a\", \"b\", \"c\"],\r\n"
+        		+ "	\"variablesValues\": [5, 6, 8]\r\n"
+        		+ "}";
+        Files.writeString(tempJSONFile, JSONcontent);
+        tempYAMLFile = Files.createTempFile("testFileYAML", ".yml");
+        String YAMLcontent = "Expression: a + b + c\r\n"
+        		+ "VariablesNames:\r\n"
+        		+ "  - a\r\n"
+        		+ "  - b\r\n"
+        		+ "  - c\r\n"
+        		+ "VariablesValues: \r\n"
+        		+ "- 5 \r\n"
+        		+ "- 6 \r\n"
+        		+ "- 9";
+        Files.writeString(tempYAMLFile, YAMLcontent);
     }
 
     @AfterAll
@@ -68,6 +88,8 @@ class readerTest {
         Files.deleteIfExists(tempZipFile);
         Files.deleteIfExists(tempFileEncr);
         Files.deleteIfExists(tempZipEncr);
+        Files.deleteIfExists(tempJSONFile);
+        Files.deleteIfExists(tempYAMLFile);
     }	
 	
 	@Test
@@ -109,4 +131,27 @@ class readerTest {
 		String out = rd.read();
 		assertEquals("Hello, World!", out);
 	}
+	
+	@Test
+	void testJSON()
+	{
+		reader rd = new reader(tempJSONFile.toString(), op);
+		String out = rd.read();
+		assertEquals("a + a + c\r\n"
+				+ "a = 5\r\n"
+				+ "b = 6\r\n"
+				+ "c = 8\r\n", out);
+	}
+	
+	@Test
+	void testYAML()
+	{
+		reader rd = new reader(tempYAMLFile.toString(), op);
+		String out = rd.read();
+		assertEquals("a + b + c\r\n"
+				+ "a = 5\r\n"
+				+ "b = 6\r\n"
+				+ "c = 9\r\n", out);
+	}
+	
 }
