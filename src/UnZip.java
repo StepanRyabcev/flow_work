@@ -12,9 +12,11 @@ public class UnZip {
 
 	String fname;
 	Vector<String> files = new Vector<String>(0);
+	Main window;
 	
-	UnZip(String ffname)
+	UnZip(String ffname, Main w)
 	{
+		window = w;
 		fname = ffname;
 		try(ZipInputStream zin = new ZipInputStream(new FileInputStream(fname)))
         {
@@ -55,11 +57,12 @@ public class UnZip {
 	
 	private void select()
 	{
+		window.ShowList();
 		int selected;
 		while(true)
 		{
 			try {
-			System.out.println("Выберите файл");
+				System.out.println("Выберите файл");
 			for (int i = 0; i < files.capacity(); i++)
 			{
 				System.out.println(i + ": " + files.get(i));

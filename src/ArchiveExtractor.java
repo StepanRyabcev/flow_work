@@ -7,6 +7,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Vector;
 
+import javax.swing.SwingUtilities;
+
+import calculate.DataChanged;
 import net.sf.sevenzipjbinding.ExtractOperationResult;
 import net.sf.sevenzipjbinding.IInArchive;
 import net.sf.sevenzipjbinding.ISequentialOutStream;
@@ -19,9 +22,11 @@ import net.sf.sevenzipjbinding.simple.ISimpleInArchiveItem;
 public class ArchiveExtractor {
 	String fname;
 	private static Vector<String> files = new Vector<>(1, 1);
-	ArchiveExtractor(String fnamee)
+	private DataChanged dataChanged;
+	ArchiveExtractor(String fnamee, DataChanged d)
 	{
 		fname = fnamee;
+		dataChanged = d;
 	}
 	private void getFileList()
 	{
@@ -87,40 +92,12 @@ public class ArchiveExtractor {
 	public String select()
 	{
 		//	SelectFile sf = new SelectFile();
+		
 		getFileList();
 		if(files.capacity() > 1)
 		{
-		while(true)
-		{
-			System.out.println("Выберите файл");
-			for (int i = 0; i < files.capacity(); i++)
-			{
-				System.out.println(i + ": " + files.get(i));
-			}	
-			try {
-				@SuppressWarnings("resource")
-				Scanner in = new Scanner(System.in);
-				int selected = in.nextInt();
-				if ((selected < 0) || (selected >= files.capacity()))
-				{
-					System.out.println("Файла с таким номером не существует");
-					continue;
-				}
-				String Fname = files.get(selected);
-				System.out.println(Fname);
-				DeleteUnnesessary(selected);
-				return Fname;
-			}
-			catch(InputMismatchException e)
-			{
-				System.out.println("Неверный ввод");
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-				System.exit(0);
-			}
-		}
+			dataChanged.signal.emit(files);
+			return "-1";
 		}
 		return files.get(0);
 	}

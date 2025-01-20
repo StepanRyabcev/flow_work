@@ -3,8 +3,11 @@ import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import calculate.DataChanged;
+
 public class reader {
 		
+	private DataChanged dataChanged;
 	private String fname;	
 	boolean Specified = false;
 	boolean fromZIP = false;
@@ -12,6 +15,7 @@ public class reader {
 	boolean fromJSON = false;
 	boolean fromYAML = false;
 	boolean from7z = false;
+	private Main window;
 	enpryptionOptions op;
 	
 	boolean GUIMode = true;
@@ -38,12 +42,12 @@ public class reader {
 		if((fname.endsWith(".7z")) || (fname.endsWith(".rar")))
 		{
 			from7z = true;
-			ArchiveExtractor uz = new ArchiveExtractor(fname);
+			ArchiveExtractor uz = new ArchiveExtractor(fname, dataChanged);
 			fname = uz.select();
 		}
 		if (fname.endsWith(".zip"))
 		{
-	        UnZip uz = new UnZip(fname);
+	        UnZip uz = new UnZip(fname, window);
 	        fname = uz.getFname();
 	        fromZIP = true;
 		}
@@ -61,8 +65,9 @@ public class reader {
 		}
 	}
 	
-	reader(enpryptionOptions op1)
+	reader(enpryptionOptions op1, DataChanged d)
 	{
+		dataChanged = d;
 		op = op1;
 		Reader();
 	}
@@ -71,6 +76,13 @@ public class reader {
 	{
 		File toDelete = new File(fname);
 		toDelete.delete();
+	}
+	
+	public void SetFname(String f)
+	{
+		fname = f;
+		Specified = true;
+		Reader();
 	}
 
 	public String read()
