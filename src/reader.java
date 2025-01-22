@@ -39,13 +39,13 @@ public class reader {
 			fd.setVisible(true);
 			fname = "C:\\Users\\ryabt\\eclipse-workspace\\calculate\\src\\" + fd.getFile();
 		}
-		if((fname.endsWith(".7z")) || (fname.endsWith(".rar")))
+		if((fname.endsWith(".7z")) || (fname.endsWith(".rar")) || (fname.endsWith(".zip")))
 		{
 			from7z = true;
 			ArchiveExtractor uz = new ArchiveExtractor(fname, dataChanged);
 			fname = uz.select();
 		}
-		if (fname.endsWith(".zip"))
+		if (fname.endsWith(".zipз"))
 		{
 	        UnZip uz = new UnZip(fname, window);
 	        fname = uz.getFname();
@@ -119,7 +119,7 @@ public class reader {
 					JOptionPane.showMessageDialog(null, "Не найден файл для загрузки выражения", "Ошибка", JOptionPane.ERROR_MESSAGE);
 			 	else
 			 		System.out.println("Не найден файл для загрузки выражения");
-				System.exit(0);
+			 	return "";
 			}
 			catch(IOException e)
 			{
@@ -127,8 +127,7 @@ public class reader {
 					JOptionPane.showMessageDialog(null, "Произошла ошибка", "Ошибка", JOptionPane.ERROR_MESSAGE);
 			 	else
 				e.printStackTrace();
-				System.exit(0);
-			}
-		return "";   
+				return "";
+			}   
 	}
 }

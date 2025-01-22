@@ -49,7 +49,7 @@ public class crypto {
  						JOptionPane.showMessageDialog(null, "Неверный ключ для дешифовки", "Ошибка", JOptionPane.ERROR_MESSAGE);
  				 	else
  				 		System.out.println("Неверный ключ для дешифовки");
- 					System.exit(0);
+ 					return "";
  				}
  				catch(IllegalArgumentException ex1)
  				{
@@ -57,14 +57,14 @@ public class crypto {
  						JOptionPane.showMessageDialog(null, "Ошибка дешифровки. Вероятно файл не был зашифрован", "Ошибка", JOptionPane.ERROR_MESSAGE);
  				 	else
  				 		System.out.println("Ошибка дешифровки. Вероятно файл не был зашифрован");
- 					System.exit(0);
+ 					return "";
  				}
  				catch (Exception e) {	
  					if(GUIMode)
  						JOptionPane.showMessageDialog(null, "Ошибка дешифровки", "Ошибка", JOptionPane.ERROR_MESSAGE);
  				 	else
  				 		System.out.println("Ошибка дешифровки");
- 					System.exit(0);
+ 					return "";
  				} 			
          }
 		return input;

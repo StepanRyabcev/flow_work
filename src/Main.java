@@ -57,6 +57,7 @@ public class Main extends JFrame {
 		frame.setBounds(100, 100, 450, 300);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JButton open = new JButton("Open file"); 
+		textPane = new JTextPane();
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				enpryptionOptions op;	
@@ -65,13 +66,19 @@ public class Main extends JFrame {
 				if(Continue)
 				{
 				String out = rd.read();
-				while(out.indexOf("(") >= 0)
-					out = brackets.findAndParseBr(out);
-				String result = director.parse(out);
-				textPane = new JTextPane();
-				frame.getContentPane().add(textPane, BorderLayout.EAST);
-				textPane.setEditable(false);
-				textPane.setText("Result: " + result);
+				if(out != "")
+				{
+					while(out.indexOf("(") >= 0)
+						out = brackets.findAndParseBr(out);
+					String result = director.parse(out);
+					if (result != "")
+					{
+					frame.getContentPane().remove(textPane);
+					frame.getContentPane().add(textPane, BorderLayout.EAST);
+					textPane.setEditable(false);
+					textPane.setText("Result: " + result);
+					}
+				}
 				}
 			}
 		});
@@ -101,6 +108,7 @@ public class Main extends JFrame {
 
 	public void ShowList(final Vector<String> files) {
 		Continue = false;
+		frame.getContentPane().remove(textPane);
 		JButton select = new JButton("Select file"); 
 		frame.getContentPane().add(select, BorderLayout.EAST);
 		listModel.addAll(files);
@@ -110,15 +118,22 @@ public class Main extends JFrame {
 					{
 					rd.SetFname(files.elementAt(list.getAnchorSelectionIndex()));
 					String out = rd.read();
-					while(out.indexOf("(") >= 0)
-						out = brackets.findAndParseBr(out);
-					String result = director.parse(out);
-					textPane = new JTextPane();
-					frame.getContentPane().add(textPane, BorderLayout.EAST);
-					textPane.setEditable(false);
-					textPane.setText("Result: " + result);
-					select.hide();
-					listModel.clear();
+					if(out != "")
+					{
+						while(out.indexOf("(") >= 0)
+							out = brackets.findAndParseBr(out);
+						String result = director.parse(out);
+						if (result != "")
+						{
+						frame.getContentPane().remove(textPane);
+						frame.getContentPane().add(textPane, BorderLayout.EAST);
+						textPane.setEditable(false);
+						textPane.setText("Result: " + result);
+						listModel.clear();
+						Continue = true;
+						}
+					}
+
 					}
 			}
 		});

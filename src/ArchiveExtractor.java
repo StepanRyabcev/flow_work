@@ -23,6 +23,7 @@ public class ArchiveExtractor {
 	String fname;
 	private static Vector<String> files = new Vector<>(1, 1);
 	private DataChanged dataChanged;
+	private boolean Error = false;
 	ArchiveExtractor(String fnamee, DataChanged d)
 	{
 		fname = fnamee;
@@ -47,14 +48,14 @@ public class ArchiveExtractor {
 								} catch (IOException e) {
 									System.out.println("Ошибка деархивации");
 									e.printStackTrace();
-									System.exit(0);
+									Error = true;
 								}
                         		} catch (FileNotFoundException e1) {
                         			System.out.println("Не удалось открыть файл для записи файлов из архива");
 									System.exit(0);
 								} catch (IOException e1) {
 									e1.printStackTrace();
-									System.exit(0);
+									Error = true;
 								}
                             return data.length;
                         }
@@ -65,7 +66,7 @@ public class ArchiveExtractor {
                      
                     } else {
                         System.err.println("Error extracting item: " + result);
-                        System.exit(0);
+                        Error = true;
                     }
                 }
             }
@@ -92,7 +93,8 @@ public class ArchiveExtractor {
 	public String select()
 	{
 		//	SelectFile sf = new SelectFile();
-		
+		if(Error)
+			return "";
 		getFileList();
 		if(files.capacity() > 1)
 		{

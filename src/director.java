@@ -18,7 +18,7 @@ public class director {
 						JOptionPane.showMessageDialog(null, "Выражение задано некорректно", "Ошибка", JOptionPane.ERROR_MESSAGE);
 					else
 					System.out.println("Выражение задано некорректно"); 
-				System.exit(0);
+				return "";
 			}
 			while(bd.ifsumexist("*"))
 			{

@@ -57,7 +57,6 @@ public class UnZip {
 	
 	private void select()
 	{
-		window.ShowList();
 		int selected;
 		while(true)
 		{

@@ -25,6 +25,7 @@ public class YAMLparser {
 		{
 			out += VariablesNames.get(i) + " = " + VariablesValues.get(i) + "\r\n";
 		}
+		
 		}
 		catch(Exception e)
 		{
@@ -32,7 +33,8 @@ public class YAMLparser {
 				JOptionPane.showMessageDialog(null, "Ошибка разбора YAML", "Ошибка", JOptionPane.ERROR_MESSAGE);
 		 	else
 			System.out.println("Ошибка разбора YAML");
-			System.exit(0);
+			//System.exit(0);
+			return "";
 		}
 		return out;
 	}

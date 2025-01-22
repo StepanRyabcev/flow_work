@@ -46,7 +46,6 @@ public class XMLparser
 				JOptionPane.showMessageDialog(null, "Ошибка разбора XML", "Ошибка", JOptionPane.ERROR_MESSAGE);
 		 	else
 		 		System.out.println("Ошибка разбора XML");
-			System.exit(0);
 		}
 		return "";
 	}

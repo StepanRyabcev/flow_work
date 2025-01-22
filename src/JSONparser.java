@@ -27,7 +27,7 @@ public class JSONparser
 				JOptionPane.showMessageDialog(null, "Нарушена структура JSON файла", "Ошибка", JOptionPane.ERROR_MESSAGE);
 		 	else
 		 		System.out.println("Нарушена структура JSON файла");
-			System.exit(0);
+			return "";
 		}
 		catch(JsonProcessingException e2)
 		{
@@ -35,7 +35,7 @@ public class JSONparser
 				JOptionPane.showMessageDialog(null, "Не удалось считать данные с JSON файла", "Ошибка", JOptionPane.ERROR_MESSAGE);
 		 	else
 		 		System.out.println("Не удалось считать данные с JSON файла");
-			System.exit(0);
+			return "";
 		}
 		return out;
 	}
